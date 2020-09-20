@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import Appointment from './Appointment';
 
 @Entity('patients')
 class Patient {
@@ -70,6 +72,9 @@ class Patient {
 
   @Column('text')
   medical_record: string;
+
+  @OneToMany(type => Appointment, appointment => appointment.patient)
+  appointments: Appointment[];
 
   @CreateDateColumn()
   created_at: Date;
