@@ -4,5 +4,9 @@
   "port": "5460",
   "username": "idoctor",
   "password": "@app#idoctor",
-  "database": "idoctor"
+  "database": "idoctor",
+  "migrations": ["./src/database/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
+  }
 }
