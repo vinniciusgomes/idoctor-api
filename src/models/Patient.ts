@@ -2,11 +2,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import Appointment from './Appointment';
+import Clinic from './Clinic';
 
 @Entity('patients')
 class Patient {
@@ -75,6 +79,13 @@ class Patient {
 
   @OneToMany(type => Appointment, appointment => appointment.patient)
   appointments: Appointment[];
+
+  @Column()
+  clinic_id: string;
+
+  @ManyToOne(type => Clinic, clinic => clinic.patients)
+  @JoinColumn({ name: 'clinic_id' })
+  clinic: Clinic;
 
   @CreateDateColumn()
   created_at: Date;

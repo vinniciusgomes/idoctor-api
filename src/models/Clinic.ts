@@ -2,9 +2,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import Appointment from './Appointment';
+import Expense from './Expense';
+import Income from './Income';
+import Patient from './Patient';
+import User from './User';
 
 @Entity('clinics')
 class Clinic {
@@ -37,6 +43,18 @@ class Clinic {
 
   @Column()
   email: string;
+
+  @OneToMany(type => Appointment, appointment => appointment.clinic)
+  appointments: Appointment[];
+
+  @OneToMany(type => Expense, expense => expense.clinic)
+  expenses: Expense[];
+
+  @OneToMany(type => Income, income => income.clinic)
+  incomes: Income[];
+
+  @OneToMany(type => Patient, patient => patient.clinic)
+  patients: Patient[];
 
   @CreateDateColumn()
   created_at: Date;
