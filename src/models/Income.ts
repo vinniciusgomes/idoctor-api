@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import Clinic from './Clinic';
 import User from './User';
 
 @Entity('incomes')
@@ -35,6 +36,13 @@ class Income {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @Column()
+  clinic_id: string;
+
+  @ManyToOne(type => Clinic, clinic => clinic.incomes)
+  @JoinColumn({ name: 'clinic_id' })
+  clinic: Clinic;
 
   @CreateDateColumn()
   created_at: Date;

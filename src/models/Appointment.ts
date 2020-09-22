@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import Clinic from './Clinic';
 import Doctor from './Doctor';
 import Patient from './Patient';
 
@@ -40,6 +41,13 @@ class Appointment {
   @ManyToOne(type => Patient, patient => patient.appointments)
   @JoinColumn({ name: 'patient_id' })
   patient: Patient;
+
+  @Column()
+  clinic_id: string;
+
+  @ManyToOne(type => Clinic, clinic => clinic.appointments)
+  @JoinColumn({ name: 'clinic_id' })
+  clinic: Clinic;
 
   @CreateDateColumn()
   created_at: Date;
