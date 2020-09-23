@@ -10,7 +10,7 @@ import {
 import Clinic from './Clinic';
 import User from './User';
 
-@Entity('enpenses')
+@Entity('expenses')
 class Expense {
   @PrimaryGeneratedColumn('uuid')
   id: string;
