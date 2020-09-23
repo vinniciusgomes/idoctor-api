@@ -30,6 +30,9 @@ class User {
   @JoinColumn({ name: 'clinic_id' })
   clinic: Clinic;
 
+  @Column('int')
+  type: Number;
+
   @CreateDateColumn()
   created_at: Date;
 
