@@ -16,7 +16,7 @@ class Income {
   id: string;
 
   @Column()
-  decription: string;
+  description: string;
 
   @Column('decimal')
   value: Number;
