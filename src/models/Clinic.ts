@@ -57,6 +57,9 @@ class Clinic {
   @OneToMany(type => Patient, patient => patient.clinic)
   patients: Patient[];
 
+  @OneToMany(type => User, user => user.clinic)
+  users: User[];
+
   @CreateDateColumn()
   created_at: Date;
 
