@@ -7,6 +7,7 @@ interface Request {
   name: string;
   login: string;
   password: string;
+  type: Number;
   clinic_id: string;
 }
 
@@ -15,6 +16,7 @@ class CreateUserService {
     name,
     login,
     password,
+    type,
     clinic_id,
   }: Request): Promise<User> {
     const userRepository = getRepository(User);
@@ -25,6 +27,7 @@ class CreateUserService {
       name,
       login,
       password: hashedPassword,
+      type,
       clinic_id,
     });
 
