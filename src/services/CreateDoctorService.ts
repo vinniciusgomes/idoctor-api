@@ -16,16 +16,16 @@ class CreateDoctorService {
     end_time,
     user_id,
   }: Request): Promise<Doctor> {
-    const createDoctor = getRepository(Doctor);
+    const doctorRepository = getRepository(Doctor);
 
-    const doctor = createDoctor.create({
+    const doctor = doctorRepository.create({
       speciality,
       start_time,
       end_time,
       user_id,
     });
 
-    await createDoctor.save(doctor);
+    await doctorRepository.save(doctor);
 
     return doctor;
   }
