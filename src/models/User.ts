@@ -27,7 +27,7 @@ class User {
   clinic_id: string;
 
   @ManyToOne(type => Clinic, clinic => clinic.patients)
-  @JoinColumn()
+  @JoinColumn({ name: 'clinic_id' })
   clinic: Clinic;
 
   @CreateDateColumn()
