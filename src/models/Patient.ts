@@ -72,7 +72,7 @@ class Patient {
   city: string;
 
   @Column('char', { length: 2 })
-  FU: string;
+  fu: string;
 
   @Column('text')
   medical_record: string;
