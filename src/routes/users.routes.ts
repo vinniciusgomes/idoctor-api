@@ -30,7 +30,7 @@ usersRouter.post('/', async (request, response) => {
 
     const createDoctor = new CreateDoctorService();
 
-    const doctor = createDoctor.execute({
+    const doctor = await createDoctor.execute({
       speciality,
       start_time,
       end_time,
