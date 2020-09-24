@@ -77,6 +77,9 @@ class Patient {
   @Column('text')
   medical_record: string;
 
+  @Column()
+  avatar: string;
+
   @OneToMany(type => Appointment, appointment => appointment.patient)
   appointments: Appointment[];
 

@@ -24,6 +24,9 @@ class User {
   password: string;
 
   @Column()
+  avatar: string;
+
+  @Column()
   clinic_id: string;
 
   @ManyToOne(type => Clinic, clinic => clinic.patients)
