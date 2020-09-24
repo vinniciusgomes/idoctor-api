@@ -6,6 +6,7 @@ import incomesRouter from './incomes.routes';
 import expensesRouter from './expenses.routes';
 import patientsRouter from './patients.routes';
 import appointmentsRouter from './appointments.routes';
+import sessionsRouter from './sessions.routes';
 
 const routes = Router();
 
@@ -15,5 +16,6 @@ routes.use('/incomes', incomesRouter);
 routes.use('/expenses', expensesRouter);
 routes.use('/patients', patientsRouter);
 routes.use('/appointments', appointmentsRouter);
+routes.use('/sessions', sessionsRouter);
 
 export default routes;
