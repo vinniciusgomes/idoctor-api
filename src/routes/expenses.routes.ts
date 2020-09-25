@@ -2,7 +2,11 @@ import { response, Router } from 'express';
 
 import CreateExpenseService from '../services/CreateExpenseService';
 
+import ensureAutheticated from '../middlewares/ensureAuthenticated';
+
 const expensesRouter = Router();
+
+expensesRouter.use(ensureAutheticated);
 
 expensesRouter.post('/', async (request, response) => {
   const {

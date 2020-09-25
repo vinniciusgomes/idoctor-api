@@ -2,7 +2,11 @@ import { Router } from 'express';
 
 import CreateIncomeService from '../services/CreateIncomeService';
 
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
 const incomesRouter = Router();
+
+incomesRouter.use(ensureAuthenticated);
 
 incomesRouter.post('/', async (request, response) => {
   const {
