@@ -2,7 +2,11 @@ import { Router } from 'express';
 
 import CreatePatientService from '../services/CreatePatientService';
 
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
 const patientsRouter = Router();
+
+patientsRouter.use(ensureAuthenticated);
 
 patientsRouter.post('/', async (request, response) => {
   const {

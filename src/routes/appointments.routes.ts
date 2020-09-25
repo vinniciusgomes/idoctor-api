@@ -2,7 +2,11 @@ import { Router } from 'express';
 
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
 const appointmentsRouter = Router();
+
+appointmentsRouter.use(ensureAuthenticated);
 
 appointmentsRouter.post('/', async (request, response) => {
   const {
