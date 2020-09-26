@@ -1,6 +1,12 @@
-import { Router } from 'express';
+import { response, Router } from 'express';
+import multer from 'multer';
 import CreateUserService from '../services/CreateUserService';
 import CreateDoctorService from '../services/CreateDoctorService';
+import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
+
+import uploadConfig from '../config/upload';
+
+const upload = multer(uploadConfig);
 
 const usersRouter = Router();
 
@@ -42,5 +48,28 @@ usersRouter.post('/', async (request, response) => {
 
   return response.json(user);
 });
+
+usersRouter.patch(
+  '/avatar',
+  upload.single('avatar'),
+  async (request, response) => {
+    try {
+      const { user_id } = request.body;
+
+      const updateAvatar = new UpdateUserAvatarService();
+
+      const user = await updateAvatar.execute({
+        user_id,
+        filename: request.file.filename,
+      });
+
+      delete user.password;
+
+      return response.json(user);
+    } catch (error) {
+      response.status(500).json(error);
+    }
+  },
+);
 
 export default usersRouter;
