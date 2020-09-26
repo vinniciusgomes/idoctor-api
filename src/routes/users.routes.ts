@@ -53,22 +53,18 @@ usersRouter.patch(
   '/avatar',
   upload.single('avatar'),
   async (request, response) => {
-    try {
-      const { user_id } = request.body;
+    const { user_id } = request.body;
 
-      const updateAvatar = new UpdateUserAvatarService();
+    const updateAvatar = new UpdateUserAvatarService();
 
-      const user = await updateAvatar.execute({
-        user_id,
-        filename: request.file.filename,
-      });
+    const user = await updateAvatar.execute({
+      user_id,
+      filename: request.file.filename,
+    });
 
-      delete user.password;
+    delete user.password;
 
-      return response.json(user);
-    } catch (error) {
-      response.status(500).json(error);
-    }
+    return response.json(user);
   },
 );
 

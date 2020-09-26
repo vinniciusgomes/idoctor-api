@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface Request {
   name: string;
@@ -31,9 +32,13 @@ class CreateUserService {
       clinic_id,
     });
 
-    await userRepository.save(user);
+    try {
+      await userRepository.save(user);
 
-    return user;
+      return user;
+    } catch {
+      throw new AppError('Error on save user');
+    }
   }
 }
 

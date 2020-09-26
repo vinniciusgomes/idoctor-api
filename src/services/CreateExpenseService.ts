@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
 
 import Expense from '../models/Expense';
 
@@ -34,9 +35,13 @@ class CreateExpenseService {
       clinic_id,
     });
 
-    await expenseRepository.save(expense);
+    try {
+      await expenseRepository.save(expense);
 
-    return expense;
+      return expense;
+    } catch {
+      throw new AppError('Error on save expense', 500);
+    }
   }
 }
 
