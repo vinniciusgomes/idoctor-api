@@ -1,8 +1,13 @@
 import { Router } from 'express';
+import multer from 'multer';
+import uploadConfig from '../config/upload';
 
 import CreatePatientService from '../services/CreatePatientService';
+import UpdatePatientAvatar from '../services/UpdatePatientAvatarService';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
+const upload = multer(uploadConfig);
 
 const patientsRouter = Router();
 
@@ -67,5 +72,25 @@ patientsRouter.post('/', async (request, response) => {
 
   return response.json(patient);
 });
+
+patientsRouter.patch(
+  '/avatar',
+  upload.single('avatar'),
+  async (request, response) => {
+    try {
+      const { patient_id } = request.body;
+      const updateAvatar = new UpdatePatientAvatar();
+
+      const patient = await updateAvatar.execute({
+        patient_id,
+        filename: request.file.filename,
+      });
+
+      return response.json(patient);
+    } catch (error) {
+      return response.status(500).json({ error });
+    }
+  },
+);
 
 export default patientsRouter;
