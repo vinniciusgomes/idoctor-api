@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
 
 import Patient from '../models/Patient';
 
@@ -76,9 +77,13 @@ class CreatePatientService {
       clinic_id,
     });
 
-    await patientRepository.save(patient);
+    try {
+      await patientRepository.save(patient);
 
-    return patient;
+      return patient;
+    } catch {
+      throw new AppError('Error on save Patient', 500);
+    }
   }
 }
 

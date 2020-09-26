@@ -77,19 +77,15 @@ patientsRouter.patch(
   '/avatar',
   upload.single('avatar'),
   async (request, response) => {
-    try {
-      const { patient_id } = request.body;
-      const updateAvatar = new UpdatePatientAvatar();
+    const { patient_id } = request.body;
+    const updateAvatar = new UpdatePatientAvatar();
 
-      const patient = await updateAvatar.execute({
-        patient_id,
-        filename: request.file.filename,
-      });
+    const patient = await updateAvatar.execute({
+      patient_id,
+      filename: request.file.filename,
+    });
 
-      return response.json(patient);
-    } catch (error) {
-      return response.status(500).json({ error });
-    }
+    return response.json(patient);
   },
 );
 

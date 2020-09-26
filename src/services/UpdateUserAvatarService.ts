@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import uploadConfig from '../config/upload';
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface Request {
   user_id: string;
@@ -16,7 +17,7 @@ class UpdateUserAvatar {
     const user = await userRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('this user not exist');
+      throw new AppError('This user not exist', 401);
     }
 
     if (user.avatar) {
@@ -30,9 +31,13 @@ class UpdateUserAvatar {
 
     user.avatar = filename;
 
-    await userRepository.save(user);
+    try {
+      await userRepository.save(user);
 
-    return user;
+      return user;
+    } catch {
+      throw new AppError('Error on save user avatar', 500);
+    }
   }
 }
 

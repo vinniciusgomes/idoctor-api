@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
 
 import Appointment from '../models/Appointment';
 
@@ -34,9 +35,12 @@ class CreateAppointmentService {
       clinic_id,
     });
 
-    await appointmentRepository.save(appointment);
-
-    return appointment;
+    try {
+      await appointmentRepository.save(appointment);
+      return appointment;
+    } catch (error) {
+      throw new AppError('Error on save the appointmet', 500);
+    }
   }
 }
 

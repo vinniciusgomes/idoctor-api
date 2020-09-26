@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import uploadConfig from '../config/upload';
 import Patient from '../models/Patient';
+import AppError from '../errors/AppError';
 
 interface Request {
   patient_id: string;
@@ -16,7 +17,7 @@ class UpdatePatientAvatar {
     const patient = await patientRepository.findOne(patient_id);
 
     if (!patient) {
-      throw new Error('This patient does not exist');
+      throw new AppError('This patient does not exist', 401);
     }
 
     if (patient.avatar) {
@@ -30,9 +31,13 @@ class UpdatePatientAvatar {
 
     patient.avatar = filename;
 
-    await patientRepository.save(patient);
+    try {
+      await patientRepository.save(patient);
 
-    return patient;
+      return patient;
+    } catch {
+      throw new AppError('Error on save patient avatar', 500);
+    }
   }
 }
 

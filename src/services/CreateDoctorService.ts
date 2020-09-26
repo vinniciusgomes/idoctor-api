@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
 
 import Doctor from '../models/Doctor';
 
@@ -25,9 +26,13 @@ class CreateDoctorService {
       user_id,
     });
 
-    await doctorRepository.save(doctor);
+    try {
+      await doctorRepository.save(doctor);
 
-    return doctor;
+      return doctor;
+    } catch {
+      throw new AppError('Error on save doctor informations', 500);
+    }
   }
 }
 

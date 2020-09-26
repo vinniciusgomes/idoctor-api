@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
 
 import Income from '../models/Income';
 
@@ -34,9 +35,13 @@ class CreateIncomeService {
       clinic_id,
     });
 
-    await incomeRepository.save(income);
+    try {
+      await incomeRepository.save(income);
 
-    return income;
+      return income;
+    } catch {
+      throw new AppError('Error on save income', 500);
+    }
   }
 }
 
