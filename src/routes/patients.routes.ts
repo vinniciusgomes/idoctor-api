@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { request, response, Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
 
@@ -6,6 +6,8 @@ import CreatePatientService from '../services/CreatePatientService';
 import UpdatePatientAvatar from '../services/UpdatePatientAvatarService';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import CountPatientListService from '../services/CountPatientListService';
+import ListPatientsService from '../services/ListPatientsService';
 
 const upload = multer(uploadConfig);
 
@@ -88,5 +90,25 @@ patientsRouter.patch(
     return response.json(patient);
   },
 );
+
+patientsRouter.get('/pagination', async (request, response) => {
+  const patientCount = new CountPatientListService();
+
+  const numberOfPatients = await patientCount.execute();
+
+  return response.json(numberOfPatients);
+});
+
+patientsRouter.get('/', async (request, response) => {
+  const { page } = request.query;
+
+  const listPatient = new ListPatientsService();
+
+  const parsedPage = Number(page);
+
+  const patientList = await listPatient.execute({ page: parsedPage });
+
+  return response.json(patientList);
+});
 
 export default patientsRouter;
