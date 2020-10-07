@@ -5,6 +5,8 @@ import CreateDoctorService from '../services/CreateDoctorService';
 import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
 
 import uploadConfig from '../config/upload';
+import ListDoctorsService from '../services/ListDoctorsService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const upload = multer(uploadConfig);
 
@@ -43,6 +45,8 @@ usersRouter.post('/', async (request, response) => {
       user_id: user.id,
     });
 
+    delete doctor.user;
+
     return response.json({ user, doctor });
   }
 
@@ -51,6 +55,7 @@ usersRouter.post('/', async (request, response) => {
 
 usersRouter.patch(
   '/avatar',
+  ensureAuthenticated,
   upload.single('avatar'),
   async (request, response) => {
     const { user_id } = request.body;
@@ -67,5 +72,13 @@ usersRouter.patch(
     return response.json(user);
   },
 );
+
+usersRouter.get('/doctors', ensureAuthenticated, async (request, response) => {
+  const listDoctor = new ListDoctorsService();
+
+  const doctorList = await listDoctor.execute();
+
+  return response.json(doctorList);
+});
 
 export default usersRouter;

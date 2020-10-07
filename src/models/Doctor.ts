@@ -1,6 +1,6 @@
 import {
   Column,
-  DeleteDateColumn,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
@@ -29,14 +29,14 @@ class Doctor {
   @Column()
   user_id: string;
 
-  @OneToOne(() => User)
+  @OneToOne(type => User, user => user.doctor)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
   @OneToMany(type => Appointment, appointment => appointment.doctor)
   appointments: Appointment[];
 
-  @DeleteDateColumn()
+  @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()

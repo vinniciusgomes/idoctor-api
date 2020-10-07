@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import AppError from '../errors/AppError';
 
 import Doctor from '../models/Doctor';
+import User from '../models/User';
 
 interface Request {
   speciality: string;
