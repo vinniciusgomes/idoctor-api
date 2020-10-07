@@ -53,7 +53,7 @@ class CreatePatientService {
   }: Request): Promise<Patient> {
     const patientRepository = getRepository(Patient);
 
-    const patientExist = patientRepository.findOne({ ssn });
+    const patientExist = await patientRepository.findOne({ ssn });
 
     if (patientExist) {
       throw new AppError('Patient already registered', 400);

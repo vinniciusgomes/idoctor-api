@@ -12,14 +12,14 @@ class ListPatientsService {
     const patientRepository = getRepository(Patient);
 
     try {
-      const patients = patientRepository.find({
+      const patientList = await patientRepository.find({
         select: ['id', 'name', 'avatar'],
         skip: (Number(page) - 1) * 10,
         take: 10,
         order: { name: 'ASC' },
       });
 
-      return patients;
+      return patientList;
     } catch {
       throw new AppError('Erro on get patients list', 500);
     }

@@ -4,10 +4,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import Clinic from './Clinic';
+import Doctor from './Doctor';
 
 @Entity('users')
 class User {
@@ -32,6 +35,9 @@ class User {
   @ManyToOne(type => Clinic, clinic => clinic.patients)
   @JoinColumn({ name: 'clinic_id' })
   clinic: Clinic;
+
+  @OneToOne(type => Doctor, doctor => doctor.user)
+  doctor: Doctor;
 
   @Column('int')
   type: Number;
