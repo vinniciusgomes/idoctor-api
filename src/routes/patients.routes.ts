@@ -8,6 +8,7 @@ import UpdatePatientAvatar from '../services/UpdatePatientAvatarService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import CountPatientListService from '../services/CountPatientListService';
 import ListPatientsService from '../services/ListPatientsService';
+import ListSpecificPatientService from '../services/ListSpecificPatientService';
 
 const upload = multer(uploadConfig);
 
@@ -109,6 +110,16 @@ patientsRouter.get('/', async (request, response) => {
   const patientList = await listPatient.execute({ page: parsedPage });
 
   return response.json(patientList);
+});
+
+patientsRouter.get('/:id', async (request, response) => {
+  const { id } = request.params;
+
+  const listPatient = new ListSpecificPatientService();
+
+  const patient = await listPatient.execute({ id });
+
+  return response.json(patient);
 });
 
 export default patientsRouter;

@@ -20,7 +20,6 @@ class ListDoctorsService {
         ])
         .leftJoin('doctor.user', 'user')
         .getMany();
-      console.log(doctorList);
 
       return doctorList;
     } catch {
