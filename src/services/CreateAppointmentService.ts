@@ -3,6 +3,9 @@ import AppError from '../errors/AppError';
 
 import Appointment from '../models/Appointment';
 
+// status -> {1:pendente, 2:confirmado, 3:cancelado, 4:realizada}
+// type -> {1:rotina, 2:retorno, 3:emergencia}
+
 interface Request {
   date: Date;
   start_time: Date;
