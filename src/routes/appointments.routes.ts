@@ -3,6 +3,7 @@ import { Router } from 'express';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ListAppointmentsService from '../services/ListAppointmentsService';
 
 const appointmentsRouter = Router();
 
@@ -38,6 +39,19 @@ appointmentsRouter.post('/', async (request, response) => {
   }
 
   return response.json(appointment);
+});
+
+appointmentsRouter.get('/', async (request, response) => {
+  const { date } = request.query;
+
+  const listAppointments = new ListAppointmentsService();
+
+  const parsedDate = date?.toString();
+  const appointmentList = await listAppointments.execute({
+    date: parsedDate,
+  });
+
+  return response.json(appointmentList);
 });
 
 export default appointmentsRouter;
