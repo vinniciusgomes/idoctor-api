@@ -31,6 +31,10 @@ class ListAppointmentsService {
         .leftJoin('appointment.doctor', 'doctor')
         .innerJoin('doctor.user', 'user')
         .where('appointment.date = :date', { date })
+        .andWhere('appointment.status NOT IN (:canceled, :finished)', {
+          canceled: 3,
+          finished: 4,
+        })
         .limit(Number(limit))
         .getMany();
 
