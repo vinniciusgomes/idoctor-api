@@ -4,10 +4,11 @@ import Appointment from '../models/Appointment';
 
 interface Request {
   date: string | undefined;
+  limit: Number;
 }
 
 class ListAppointmentsService {
-  public async execute({ date }: Request): Promise<Appointment[]> {
+  public async execute({ date, limit }: Request): Promise<Appointment[]> {
     const appointmentRepository = getRepository(Appointment);
 
     try {
@@ -30,6 +31,7 @@ class ListAppointmentsService {
         .leftJoin('appointment.doctor', 'doctor')
         .innerJoin('doctor.user', 'user')
         .where('appointment.date = :date', { date })
+        .limit(Number(limit))
         .getMany();
 
       return appointmentList;

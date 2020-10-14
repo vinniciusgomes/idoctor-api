@@ -44,11 +44,20 @@ appointmentsRouter.post('/', async (request, response) => {
 appointmentsRouter.get('/', async (request, response) => {
   const { date } = request.query;
 
+  let limit;
+
+  if (!request.query.limit) {
+    limit = 5;
+  } else {
+    limit = Number(request.query.limit);
+  }
+
   const listAppointments = new ListAppointmentsService();
 
   const parsedDate = date?.toString();
   const appointmentList = await listAppointments.execute({
     date: parsedDate,
+    limit,
   });
 
   return response.json(appointmentList);
