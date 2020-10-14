@@ -9,6 +9,7 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import CountPatientListService from '../services/CountPatientListService';
 import ListPatientsService from '../services/ListPatientsService';
 import ListSpecificPatientService from '../services/ListSpecificPatientService';
+import ListPatientsByDoctorService from '../services/ListPatientsByDoctorService';
 
 const upload = multer(uploadConfig);
 
@@ -108,6 +109,19 @@ patientsRouter.get('/', async (request, response) => {
   const parsedPage = Number(page);
 
   const patientList = await listPatient.execute({ page: parsedPage });
+
+  return response.json(patientList);
+});
+
+patientsRouter.get('/doctor/:doctor', async (request, response) => {
+  const { page } = request.query;
+  const { doctor } = request.params;
+
+  const listPatient = new ListPatientsByDoctorService();
+
+  const parsedPage = Number(page);
+
+  const patientList = await listPatient.execute({ page: parsedPage, doctor });
 
   return response.json(patientList);
 });
