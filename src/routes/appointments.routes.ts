@@ -4,6 +4,7 @@ import CreateAppointmentService from '../services/CreateAppointmentService';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import ListAppointmentsService from '../services/ListAppointmentsService';
+import ListSpecificAppointmentService from '../services/ListSpecificAppointmentService';
 
 const appointmentsRouter = Router();
 
@@ -61,6 +62,16 @@ appointmentsRouter.get('/', async (request, response) => {
   });
 
   return response.json(appointmentList);
+});
+
+appointmentsRouter.get('/:id', async (request, response) => {
+  const { id } = request.params;
+
+  const listAppointment = new ListSpecificAppointmentService();
+
+  const appointment = await listAppointment.execute({ id });
+
+  return response.json(appointment);
 });
 
 export default appointmentsRouter;
