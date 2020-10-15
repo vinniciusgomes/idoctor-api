@@ -1,0 +1,67 @@
+import { Equal, getRepository } from 'typeorm';
+import AppError from '../errors/AppError';
+import Appointment from '../models/Appointment';
+
+interface Request {
+  date: string | undefined;
+  doctor: string;
+  limit: Number;
+}
+
+class ListAppointmentsByDoctorService {
+  public async execute({
+    date,
+    doctor,
+    limit,
+  }: Request): Promise<Appointment[]> {
+    const appointmentRepository = getRepository(Appointment);
+
+    try {
+      const appointmentList = await appointmentRepository
+        .createQueryBuilder('appointment')
+        .select([
+          'appointment.id',
+          'appointment.date',
+          'appointment.status',
+          'appointment.type',
+          'appointment.start_time',
+          'patient.name',
+          'patient.id',
+          'patient.email',
+          'patient.phone',
+          'doctor.speciality',
+          'doctor.id',
+          'user.name',
+          'patient_appointments.id',
+          'patient_appointments.type',
+          'patient_appointments.status',
+        ])
+        .leftJoin('appointment.patient', 'patient')
+        .leftJoin(
+          'patient.appointments',
+          'patient_appointments',
+          'patient_appointments.status  = :status',
+          {
+            status: 4,
+          },
+        )
+        .leftJoin('appointment.doctor', 'doctor')
+        .innerJoin('doctor.user', 'user')
+        .where('appointment.date = :date', { date })
+        .andWhere('appointment.status NOT IN (:canceled, :finished)', {
+          canceled: 3,
+          finished: 4,
+        })
+        .andWhere('doctor.id = :doctor', { doctor })
+        .orderBy('appointment.start_time', 'ASC')
+        .limit(Number(limit))
+        .getMany();
+
+      return appointmentList;
+    } catch {
+      throw new AppError('Erro on get patients list', 500);
+    }
+  }
+}
+
+export default ListAppointmentsByDoctorService;
