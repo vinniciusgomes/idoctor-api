@@ -18,6 +18,7 @@ class ListAppointmentsService {
           'appointment.id',
           'appointment.date',
           'appointment.status',
+          'appointment.type',
           'appointment.start_time',
           'patient.name',
           'patient.id',
@@ -26,8 +27,19 @@ class ListAppointmentsService {
           'doctor.speciality',
           'doctor.id',
           'user.name',
+          'patient_appointments.id',
+          'patient_appointments.type',
+          'patient_appointments.status',
         ])
         .leftJoin('appointment.patient', 'patient')
+        .leftJoin(
+          'patient.appointments',
+          'patient_appointments',
+          'patient_appointments.status  = :status',
+          {
+            status: 4,
+          },
+        )
         .leftJoin('appointment.doctor', 'doctor')
         .innerJoin('doctor.user', 'user')
         .where('appointment.date = :date', { date })
@@ -35,6 +47,7 @@ class ListAppointmentsService {
           canceled: 3,
           finished: 4,
         })
+        .orderBy('appointment.start_time', 'ASC')
         .limit(Number(limit))
         .getMany();
 
