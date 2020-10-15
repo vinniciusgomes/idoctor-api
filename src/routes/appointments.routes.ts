@@ -6,6 +6,7 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import ListAppointmentsService from '../services/ListAppointmentsService';
 import ListSpecificAppointmentService from '../services/ListSpecificAppointmentService';
 import ListAppointmentsInMonthService from '../services/ListAppointmentsInMonthService';
+import ListAppointmentsByDoctorService from '../services/ListAppointmentsByDoctorService';
 
 const appointmentsRouter = Router();
 
@@ -59,6 +60,30 @@ appointmentsRouter.get('/', async (request, response) => {
   const parsedDate = date?.toString();
   const appointmentList = await listAppointments.execute({
     date: parsedDate,
+    limit,
+  });
+
+  return response.json(appointmentList);
+});
+
+appointmentsRouter.get('/doctor/:doctor', async (request, response) => {
+  const { date } = request.query;
+  const { doctor } = request.params;
+
+  let limit;
+
+  if (!request.query.limit) {
+    limit = 5;
+  } else {
+    limit = Number(request.query.limit);
+  }
+
+  const listAppointments = new ListAppointmentsByDoctorService();
+
+  const parsedDate = date?.toString();
+  const appointmentList = await listAppointments.execute({
+    date: parsedDate,
+    doctor,
     limit,
   });
 
