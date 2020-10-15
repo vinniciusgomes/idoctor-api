@@ -7,6 +7,7 @@ import ListAppointmentsService from '../services/ListAppointmentsService';
 import ListSpecificAppointmentService from '../services/ListSpecificAppointmentService';
 import ListAppointmentsInMonthService from '../services/ListAppointmentsInMonthService';
 import ListAppointmentsByDoctorService from '../services/ListAppointmentsByDoctorService';
+import ListAppointmentsInMonthByDoctorService from '../services/ListAppointmentsInMonthByDoctorService';
 
 const appointmentsRouter = Router();
 
@@ -109,6 +110,33 @@ appointmentsRouter.get('/month', async (request, response) => {
   const appointmentList = await listAppointments.execute({
     month: parsedMonth,
     year: parsedYear,
+    limit,
+  });
+
+  return response.json(appointmentList);
+});
+
+appointmentsRouter.get('/month/doctor/:doctor', async (request, response) => {
+  const { month, year } = request.query;
+  const { doctor } = request.params;
+
+  let limit;
+
+  if (!request.query.limit) {
+    limit = 5;
+  } else {
+    limit = Number(request.query.limit);
+  }
+
+  const listAppointments = new ListAppointmentsInMonthByDoctorService();
+
+  const parsedMonth = Number(month);
+  const parsedYear = Number(year);
+
+  const appointmentList = await listAppointments.execute({
+    month: parsedMonth,
+    year: parsedYear,
+    doctor,
     limit,
   });
 
