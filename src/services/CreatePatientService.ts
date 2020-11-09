@@ -23,7 +23,6 @@ interface Request {
   neighborhood: string;
   city: string;
   fu: string;
-  medical_record: string;
   clinic_id: string;
 }
 
@@ -48,7 +47,6 @@ class CreatePatientService {
     neighborhood,
     city,
     fu,
-    medical_record,
     clinic_id,
   }: Request): Promise<Patient> {
     const patientRepository = getRepository(Patient);
@@ -79,7 +77,6 @@ class CreatePatientService {
       neighborhood,
       city,
       fu,
-      medical_record,
       clinic_id,
     });
 

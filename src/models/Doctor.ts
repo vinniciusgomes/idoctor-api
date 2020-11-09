@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import Appointment from './Appointment';
+import MedicalRecord from './MedicalRecord';
 
 import User from './User';
 
@@ -35,6 +36,9 @@ class Doctor {
 
   @OneToMany(type => Appointment, appointment => appointment.doctor)
   appointments: Appointment[];
+
+  @OneToMany(type => MedicalRecord, medical_record => medical_record.doctor)
+  medical_records: MedicalRecord[];
 
   @CreateDateColumn()
   created_at: Date;
