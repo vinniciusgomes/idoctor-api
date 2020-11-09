@@ -5,15 +5,25 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^3.9.1",
+    "bcryptjs": "^2.4.3",
     "eslint-config-airbnb-base": "^14.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "pg": "^8.3.3",
+    "typeorm": "^0.2.26"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.7",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/multer": "^1.4.4",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.2.1",
