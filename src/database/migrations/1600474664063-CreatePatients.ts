@@ -92,10 +92,6 @@ export default class CreatePatients1600474664063 implements MigrationInterface {
             length: '2',
           },
           {
-            name: 'medical_record',
-            type: 'text',
-          },
-          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
