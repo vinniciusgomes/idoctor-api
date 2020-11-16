@@ -5,6 +5,7 @@ import authConfig from '../config/auth';
 
 import User from '../models/User';
 import AppError from '../errors/AppError';
+import Doctor from '../models/Doctor';
 
 interface Request {
   login: string;
@@ -14,11 +15,13 @@ interface Request {
 interface Response {
   user: User;
   token: string;
+  doctor: Doctor | undefined;
 }
 
 class AuthenticateUserService {
   public async execute({ login, password }: Request): Promise<Response> {
     const userReository = getRepository(User);
+    const doctorReository = getRepository(Doctor);
 
     const user = await userReository.findOne({ where: { login } });
 
@@ -39,9 +42,16 @@ class AuthenticateUserService {
       expiresIn: expiresIn,
     });
 
+    const doctor = await doctorReository.findOne({
+      where: { user_id: user.id },
+    });
+
+    console.log(doctor);
+
     return {
       user,
       token,
+      doctor,
     };
   }
 }
