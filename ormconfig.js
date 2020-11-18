@@ -1,13 +1,13 @@
-{
+module.exports  = {
   "type": "postgres",
   "host": "ec2-54-196-89-124.compute-1.amazonaws.com",
   "port": "5432",
   "username": "nourlhtmyushww",
   "password": "d54b32d01cdf576d2f32018a8a11611a5b15872144ca0230a813f829adcfdab3",
   "database": "d5pe0u0qtg80d3",
-  "migrations": ["./src/database/migrations/*.ts"],
+  "migrations": ["./dist/database/migrations/*.js"],
   "cli": {
-    "migrationsDir": "./src/database/migrations"
+    "migrationsDir": "./dist/database/migrations"
   },
-  "entities": ["src/models/*.ts"]
+  "entities": ["dist/models/*.js"]
 }
