@@ -16,7 +16,7 @@ class ListAppointmentsService {
         .createQueryBuilder('appointment')
         .select([
           'appointment.id',
-          'appointment.date || appointment.start_time AS appointment.date',
+          'appointment.date || appointment.start_time AS date',
           'appointment.status',
           'appointment.type',
           'appointment.start_time',
