@@ -31,7 +31,7 @@ usersRouter.post('/', async (request, response) => {
       .json({ error: 'An error occurred while creating user' });
   }
 
-  delete user.password;
+  user.password = '';
 
   if (type == 2) {
     const { speciality, start_time, end_time } = request.body;
@@ -45,7 +45,7 @@ usersRouter.post('/', async (request, response) => {
       user_id: user.id,
     });
 
-    delete doctor.user;
+    user.password = '';
 
     return response.json({ user, doctor });
   }
@@ -67,7 +67,7 @@ usersRouter.patch(
       filename: request.file.filename,
     });
 
-    delete user.password;
+    user.password = '';
 
     return response.json(user);
   },
