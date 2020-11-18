@@ -46,8 +46,6 @@ class AuthenticateUserService {
       where: { user_id: user.id },
     });
 
-    console.log(doctor);
-
     return {
       user,
       token,
