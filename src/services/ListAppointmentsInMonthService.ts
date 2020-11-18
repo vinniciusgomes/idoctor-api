@@ -29,6 +29,7 @@ class ListAppointmentsInMonthService {
           'patient.id',
           'patient.email',
           'patient.phone',
+          'patient.avatar',
           'doctor.speciality',
           'doctor.id',
           'user.name',
