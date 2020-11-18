@@ -16,7 +16,7 @@ class ListAppointmentsService {
         .createQueryBuilder('appointment')
         .select([
           'appointment.id',
-          '() => "CONCAT(appointment.date, \' \', appointment.start_time)"',
+          'appointment.date',
           'appointment.status',
           'appointment.type',
           'appointment.start_time',
