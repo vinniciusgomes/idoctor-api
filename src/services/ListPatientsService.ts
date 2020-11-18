@@ -14,11 +14,26 @@ class ListPatientsService {
     try {
       const patientList = await patientRepository
         .createQueryBuilder('patient')
-        .select(['patient.id', 'patient.name', 'patient.avatar'])
-        .leftJoinAndSelect('patient.appointments', 'appointment')
-        .where('appointment.status = :status', { status: 4 })
-        .orWhere('appointment.type = :type', { type: 2 })
-        .andWhere('appointment.status NOT IN (:canceled, :finished)', {
+        .select([
+          'patient.id',
+          'patient.name',
+          'patient.avatar',
+          'patient_appointments.id',
+          'patient_appointments.type',
+          'patient_appointments.status',
+          'patient_appointments.date',
+        ])
+        .leftJoin(
+          'patient.appointments',
+          'patient_appointments',
+          'patient_appointments.status  = :status',
+          {
+            status: 4,
+          },
+        )
+        .where('patient_appointments.status = :status', { status: 4 })
+        .orWhere('patient_appointments.type = :type', { type: 2 })
+        .andWhere('patient_appointments.status NOT IN (:canceled, :finished)', {
           canceled: 3,
           finished: 4,
         })
