@@ -4,7 +4,6 @@
   "engines": {
     "node": "12.x"
   },
-  "type": "module",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
