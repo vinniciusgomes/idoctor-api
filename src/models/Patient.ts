@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import Appointment from './Appointment';
 import Clinic from './Clinic';
+import MedicalRecord from './MedicalRecord';
 
 @Entity('patients')
 class Patient {
@@ -74,8 +75,8 @@ class Patient {
   @Column('char', { length: 2 })
   fu: string;
 
-  @Column('text')
-  medical_record: string;
+  @OneToMany(type => MedicalRecord, medical_record => medical_record.patient)
+  medical_records: MedicalRecord[];
 
   @Column()
   avatar: string;

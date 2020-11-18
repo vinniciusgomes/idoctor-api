@@ -1,4 +1,4 @@
-import { Equal, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import AppError from '../errors/AppError';
 
 import Patient from '../models/Patient';

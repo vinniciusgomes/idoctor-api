@@ -1,4 +1,4 @@
-import { request, response, Router } from 'express';
+import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
 
@@ -10,6 +10,8 @@ import CountPatientListService from '../services/CountPatientListService';
 import ListPatientsService from '../services/ListPatientsService';
 import ListSpecificPatientService from '../services/ListSpecificPatientService';
 import ListPatientsByDoctorService from '../services/ListPatientsByDoctorService';
+import SaveMedicalReportService from '../services/SaveMedicalReportService';
+import ListMedicalReportService from '../services/ListMedicalReportService';
 
 const upload = multer(uploadConfig);
 
@@ -64,7 +66,6 @@ patientsRouter.post('/', async (request, response) => {
     neighborhood,
     city,
     fu,
-    medical_record,
     clinic_id,
   });
 
@@ -134,6 +135,33 @@ patientsRouter.get('/:id', async (request, response) => {
   const patient = await listPatient.execute({ id });
 
   return response.json(patient);
+});
+
+patientsRouter.post('/medical-record', async (request, response) => {
+  const { patient_id, record, date, doctor_id } = request.body;
+
+  const saveMedicalRecord = new SaveMedicalReportService();
+
+  const medicalRecord = await saveMedicalRecord.execute({
+    patient_id,
+    record,
+    date,
+    doctor_id,
+  });
+
+  return response.json(medicalRecord);
+});
+
+patientsRouter.get('/:id/medical-record', async (request, response) => {
+  const { id } = request.params;
+
+  const listMedicalRecord = new ListMedicalReportService();
+
+  const medicalRecord = await listMedicalRecord.execute({
+    id,
+  });
+
+  return response.json({ record: medicalRecord });
 });
 
 export default patientsRouter;

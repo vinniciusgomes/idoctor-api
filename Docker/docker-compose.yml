@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  postgresql:
+    build:
+      dockerfile: ./postgresql.dockerfile
+      context: .
+    ports:
+      - "5460:5460"
+  api:
+    depends_on:
+      - postgresql
+    build:
+      dockerfile: ./api-nodejs.dockerfile
+      context: .
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./idoctor-api:/idoctor-api
+    restart: on-failure
+  web:
+    depends_on:
+      - api
+    build:
+      dockerfile: ./app-nodejs.dockerfile
+      context: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./idoctor:/idoctor
+    restart: on-failure
+    stdin_open: true
