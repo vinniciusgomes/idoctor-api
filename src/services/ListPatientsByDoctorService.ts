@@ -16,7 +16,7 @@ class ListPatientsByDoctorService {
       const patientList = await patientRepository
         .createQueryBuilder('patient')
         .select(['patient.id', 'patient.name', 'patient.avatar'])
-        .leftJoinAndSelect('patient.appointments', 'appointment')
+        .leftJoin('patient.appointments', 'appointment')
         .where('appointment.doctor_id = :doctor', { doctor })
         // .andWhere('appointment.status = :status', { status: 4 })
         // .orWhere('appointment.type = :type', { type: 2 })
