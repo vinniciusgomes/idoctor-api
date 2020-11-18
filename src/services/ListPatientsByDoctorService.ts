@@ -18,12 +18,12 @@ class ListPatientsByDoctorService {
         .select(['patient.id', 'patient.name', 'patient.avatar'])
         .leftJoinAndSelect('patient.appointments', 'appointment')
         .where('appointment.doctor_id = :doctor', { doctor })
-        .andWhere('appointment.status = :status', { status: 4 })
-        .orWhere('appointment.type = :type', { type: 2 })
-        .andWhere('appointment.status NOT IN (:canceled, :finished)', {
-          canceled: 3,
-          finished: 4,
-        })
+        // .andWhere('appointment.status = :status', { status: 4 })
+        // .orWhere('appointment.type = :type', { type: 2 })
+        // .andWhere('appointment.status NOT IN (:canceled, :finished)', {
+        //   canceled: 3,
+        //   finished: 4,
+        // })
         .skip((Number(page) - 1) * 10)
         .take(10)
         .orderBy('patient.name', 'ASC')
