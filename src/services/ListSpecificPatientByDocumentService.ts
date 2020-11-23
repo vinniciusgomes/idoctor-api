@@ -12,7 +12,7 @@ class ListSpecificPatientByDocumentService {
     const patientRepository = getRepository(Patient);
 
     try {
-      const patient = await patientRepository.findOne(ssn);
+      const patient = await patientRepository.findOne({ ssn });
 
       if (patient) {
         return patient;
