@@ -12,6 +12,7 @@ import ListSpecificPatientService from '../services/ListSpecificPatientService';
 import ListPatientsByDoctorService from '../services/ListPatientsByDoctorService';
 import SaveMedicalReportService from '../services/SaveMedicalReportService';
 import ListMedicalReportService from '../services/ListMedicalReportService';
+import ListSpecificPatientByDocumentService from '../services/ListSpecificPatientByDocumentService';
 
 const upload = multer(uploadConfig);
 
@@ -125,6 +126,16 @@ patientsRouter.get('/doctor/:doctor', async (request, response) => {
   const patientList = await listPatient.execute({ page: parsedPage, doctor });
 
   return response.json(patientList);
+});
+
+patientsRouter.get('/document/:document', async (request, response) => {
+  const { document } = request.params;
+
+  const listPatient = new ListSpecificPatientByDocumentService();
+
+  const patient = await listPatient.execute({ ssn: document });
+
+  return response.json(patient);
 });
 
 patientsRouter.get('/:id', async (request, response) => {
