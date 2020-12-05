@@ -5,6 +5,8 @@
   <br>
 </h1>
 
+<p align="center">🚧 WIP API Documentation 🚧</p>
+
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/vinniciusgomes/idoctor-api">
 
